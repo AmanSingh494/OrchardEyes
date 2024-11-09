@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import LogoImg from '../assets/img/logo.png'
 import { useNavigate } from 'react-router-dom'
+import Auth from './Auth'
 const NavbarContainer = styled.nav.withConfig({
   shouldForwardProp: (prop) => !['background'].includes(prop)
 })`
@@ -40,32 +41,7 @@ const NavLink = styled.li`
     text-decoration: underline;
   }
 `
-const LoginBtn = styled.button`
-  color: black;
-  background-color: #e3e3e3;
-  padding: 0.5rem 1rem;
-  margin-left: 1rem;
-  cursor: pointer;
-  border-radius: 4px;
 
-  &:hover {
-    background-color: #9f9e9e;
-  }
-`
-
-const RegisterBtn = styled.button`
-  color: white;
-  background-color: #7c0a0a;
-  padding: 0.5rem 1rem;
-  margin-left: 1rem;
-  cursor: pointer;
-  border-radius: 4px;
-
-  &:hover {
-    color: ;
-    background-color: red;
-  }
-`
 const Navbar = ({ background }) => {
   const navigate = useNavigate()
   return (
@@ -102,21 +78,7 @@ const Navbar = ({ background }) => {
         >
           Contact
         </NavLink>
-
-        <RegisterBtn
-          onClick={() => {
-            navigate('/register')
-          }}
-        >
-          Register
-        </RegisterBtn>
-        <LoginBtn
-          onClick={() => {
-            navigate('/login')
-          }}
-        >
-          Login
-        </LoginBtn>
+        <Auth />
       </NavLinks>
     </NavbarContainer>
   )
