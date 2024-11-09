@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import VoiceInput from './VoiceInput'
-import ChatBotImg from '../assets/chatbot-img.png'
+import ChatBotImg from '../assets/img/chatbot-img.png'
 import { getChatbotResponse } from '../api'
 
 const Main = styled.div.withConfig({
