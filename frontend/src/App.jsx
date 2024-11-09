@@ -5,6 +5,9 @@ import Navbar from './components/Navbar'
 import LandingPage from './pages/LandingPage'
 import ProfilePage from './components/OwnerPage'
 
+import OrchardManagement from './pages/FarmManagement'
+
+
 function App() {
   return (
     <BrowserRouter>
@@ -21,6 +24,9 @@ function AppContent() {
       <Routes>
         <Route path='/' element={<LandingPage />} />
         <Route path='/ownerPage' element={<ProfilePage />} />
+
+        <Route path='/farm-management' element={<OrchardManagement />} />
+
       </Routes>
     </>
   )

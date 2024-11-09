@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import VoiceInput from './VoiceInput'
-import ChatBotImg from '../assets/chatbot-img.png'
+import ChatBotImg from '../assets/img/chatbot-img.png'
 import { getChatbotResponse } from '../api'
 
 const Main = styled.div.withConfig({
@@ -153,7 +153,7 @@ const Chatbot = () => {
         </ChatbotContainer>
       </Main>
       <div
-        className='w-16 h-16 bg-red-800 rounded-full flex items-center justify-center z-110 fixed bottom-5 right-5 cursor-pointer'
+        className='w-16 h-16 bg-red-800 rounded-full flex items-center justify-center z-[999] fixed bottom-5 right-5 cursor-pointer'
         onClick={() => {
           setIsOpened((prevIsOpened) => !prevIsOpened)
         }}
