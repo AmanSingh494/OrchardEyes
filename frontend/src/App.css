@@ -1,0 +1,172 @@
+:root {
+  --font-ex-large: 3rem;
+  --font-large: 2rem;
+  --font-medium: 1.5rem;
+  --font-mid-medium: 1.15rem;
+  --font-small: 0.85rem;
+  --font-ex-small: 0.7rem;
+  --font-bold: 500;
+  --font-mid-bold: 600;
+  --font-ex-bold: 700;
+  --font-light: lighter;
+  --font-primary: 'Merriweather', serif;
+  --font-secondary: 'Montserrat', sans-serif;
+  --font-tertiary: 'Josefin Sans', sans-serif;
+  --color-primary: #7c0a0a;
+  --color-primary-light: #c91313;
+  --color-secondary: #3c5b6f;
+  --color-tertiary: #948979;
+  --color-quaternary: #dfd0b8;
+}
+
+/* Font Size Utility Classes */
+.font-ex-large {
+  font-size: var(--font-ex-large);
+}
+
+.font-large {
+  font-size: var(--font-large);
+}
+
+.font-medium {
+  font-size: var(--font-medium);
+}
+
+.font-mid-medium {
+  font-size: var(--font-mid-medium);
+}
+
+.font-small {
+  font-size: var(--font-small);
+}
+
+.font-ex-small {
+  font-size: var(--font-ex-small);
+}
+
+/* Font Weight Utility Classes */
+.font-bold {
+  font-weight: var(--font-bold);
+}
+
+.font-mid-bold {
+  font-weight: var(--font-mid-bold);
+}
+
+.font-ex-bold {
+  font-weight: var(--font-ex-bold);
+}
+
+.font-light {
+  font-weight: var(--font-light);
+}
+
+/* Font Family Utility Classes */
+.font-primary {
+  font-family: var(--font-primary);
+}
+
+.font-secondary {
+  font-family: var(--font-secondary);
+}
+
+.font-tertiary {
+  font-family: var(--font-tertiary);
+}
+
+/* Color Utility Classes */
+.color-primary {
+  color: var(--color-primary);
+}
+
+.color-secondary {
+  color: var(--color-secondary);
+}
+
+.color-tertiary {
+  color: var(--color-tertiary);
+}
+
+.color-quaternary {
+  color: var(--color-quaternary);
+}
+
+/* Background Color Utility Classes */
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary);
+}
+
+.bg-tertiary {
+  background-color: var(--color-tertiary);
+}
+
+.bg-quaternary {
+  background-color: var(--color-quaternary);
+}
+.text-highlight {
+  color: #e3d89e;
+}
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 0.25rem 0.55rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: var(--color-primary-light);
+  }
+}
+
+/* Add fade effect to the end of the slider */
+.slider-container {
+  position: relative;
+}
+
+.fade-effect {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50px; /* Adjust the width as needed */
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 1),
+    rgba(255, 255, 255, 0)
+  );
+  pointer-events: none; /* Allow interaction with the slides */
+}
+
+.slick-arrow::before {
+  color: #022e00; /* Change this to your desired color */
+  z-index: 1;
+}
+
+/* styles for overflow scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 2px; /* Adjust the width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background of the scrollbar track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 4px; /* Rounded corners for the scrollbar thumb */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the scrollbar thumb on hover */
+}
+/* Add this CSS to your stylesheet */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px #224133 inset !important;
+  box-shadow: 0 0 0 30px #224133 inset !important;
+  -webkit-text-fill-color: #c7c7c7 !important;
+}
