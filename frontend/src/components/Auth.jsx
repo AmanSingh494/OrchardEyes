@@ -34,7 +34,12 @@ const Auth = () => {
     <div className='flex items-center gap-3'>
       <RegisterBtn
         onClick={() => {
-          logout()
+          logout({
+            logoutParams: {
+              returnTo: import.meta.env.VITE_REDIRECT_URL,
+              clientId: 'BCYRUBfd9PLBjvn60NwTFKhsAf7dffr7'
+            }
+          })
         }}
       >
         Log Out

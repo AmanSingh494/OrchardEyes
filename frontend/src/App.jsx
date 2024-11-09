@@ -6,7 +6,7 @@ import LandingPage from './pages/LandingPage'
 import ProfilePage from './components/OwnerPage'
 
 import OrchardManagement from './pages/FarmManagement'
-
+import ModelsReport from './pages/ModelsReport'
 
 function App() {
   return (
@@ -27,6 +27,7 @@ function AppContent() {
 
         <Route path='/farm-management' element={<OrchardManagement />} />
 
+        <Route path='/models-report' element={<ModelsReport />} />
       </Routes>
     </>
   )
