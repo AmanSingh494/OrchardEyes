@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import './App.css'
-import { BrowserRouter, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, useLocation, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
+import LandingPage from './pages/LandingPage'
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function AppContent() {
   return (
     <>
       <Navbar background={isOrchardRoute ? '#f4f4f4' : 'transparent'} />
+      <Routes>
+        <Route path='/' element={<LandingPage />} />
+      </Routes>
     </>
   )
 }
