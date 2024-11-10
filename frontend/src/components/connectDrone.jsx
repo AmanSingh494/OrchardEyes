@@ -2,16 +2,19 @@ import { useState } from 'react'
 import { Scanner } from '@yudiel/react-qr-scanner'
 import Button from '../components/Button.jsx'
 import DroneComponent from './Drone3d.jsx'
+import { useNavigate } from 'react-router-dom'
 
 const ConnectDrone = () => {
   const [qrData, setQrData] = useState(null)
   const [error, setError] = useState(null)
   const [isScanning, setIsScanning] = useState(false)
+  const navigate = useNavigate()
   const handleScan = (data) => {
     if (data) {
       setQrData(data)
       setIsScanning(false)
       console.log('QR Data:', data[0].rawValue)
+      if (data[0].rawValue) navigate('/farm-management')
     }
   }
 
