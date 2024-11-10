@@ -24,23 +24,26 @@ class ImageSubscriber(Node):
         np_arr = np.frombuffer(msg.data, np.uint8)
         cv_image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
         try:
-            self.get_logger().info("check1")
             _, encoded_image = cv2.imencode('.jpg', cv_image)
             image_bytes = encoded_image.tobytes()
 
-            self.get_logger().info("check2")
             files = {'image': (image_bytes)}
 
-            self.get_logger().info("check3")
             response = requests.post(url, files=files)
 
-            self.get_logger().info("check4")
-            # self.get_logger().info(response)
+            response = response.json()
+
         
         except Exception as e:
             self.get_logger().error(f"Error occurred: {e}")
             self.get_logger().error(traceback.format_exc())  # Log the full traceback
         
+        for i in response['results']:
+            x1,y1,x2,y2 = i["bounding_box"]
+            self.get_logger().info(f"{x1}")
+            cv2.rectangle(cv_image, (x1,y1) , (x2,y2) , (0,255,0), 2)
+            # cv2.putText(cv_image, f'''conf: {i["confidence"]}''')
+
         cv2.imshow("Camera Image", cv_image)
         cv2.waitKey(1)
         # self.destroy_node()

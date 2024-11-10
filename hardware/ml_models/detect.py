@@ -8,7 +8,10 @@ def load_model(model_path):
     return YOLO(model_path)
 
 # Define class names
-class_names = ["tree"]
+class_names = []
+
+def set_class(cls = "tree"):
+    class_names = cls
 
 def predict(model, image):
     """Run the model prediction on the given image."""

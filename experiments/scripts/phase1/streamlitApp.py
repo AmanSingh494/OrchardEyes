@@ -9,7 +9,7 @@ import os
 # Load the YOLO model
 @st.cache_resource
 def load_model():
-    return YOLO('/home/kalie/work/projects/OrchardEyes/experiments/models/tree-organ-best-model.pt')
+    return YOLO('/home/rogue/Desktop/OrchardEyes/experiments/models/tree-organ-best-model.pt')
 
 model = load_model()
 
