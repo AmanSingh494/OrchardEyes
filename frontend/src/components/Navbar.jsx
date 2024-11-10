@@ -42,7 +42,7 @@ const NavLink = styled.li`
   }
 `
 
-const Navbar = ({ background }) => {
+const Navbar = ({ background, isAuthenticated }) => {
   const navigate = useNavigate()
   return (
     <NavbarContainer background={background}>
@@ -78,7 +78,7 @@ const Navbar = ({ background }) => {
         >
           Contact
         </NavLink>
-        <Auth />
+        <Auth isAuthenticated={isAuthenticated} />
       </NavLinks>
     </NavbarContainer>
   )

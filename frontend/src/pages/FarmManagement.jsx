@@ -8,6 +8,8 @@ import sunCloud from '../assets/img/sun_cloud.svg'
 import SidebarLeft from '../components/SideBarLeft'
 import PieChart from '../components/charts/PieChart'
 import SideBarRight from '../components/SideBarRight'
+import LineChart from '../components/charts/LineChart'
+import PrecisionMap from '../components/charts/PrecisonMap'
 
 const OrchardManagement = () => {
   const [farmMetrics, setFarmMetrics] = useState(null)
@@ -35,7 +37,48 @@ const OrchardManagement = () => {
       chance: [10, 43, 47] // percentages
     },
     appleCount: 1200, // total number of apples
-    production: 5.5 // in tonnes
+    estimatedAppleYield: [0, 3.2, 5.5, 2.3, 4.1, 6.7, 3.8], // in tonnes
+    precisionMapData: {
+      pestDisease: [
+        [1.1, 1.2],
+        [1.3, 2.1],
+        [1.5, 3.3],
+        [2.2, 1.4],
+        [2.5, 2.6],
+        [2.8, 3.1]
+      ],
+      lowWater: [
+        [3.1, 1.2],
+        [3.3, 2.4],
+        [3.5, 3.6],
+        [4.2, 1.1],
+        [4.5, 2.3],
+        [4.8, 3.5]
+      ],
+      nutrientDeficiency: [
+        [5.1, 1.3],
+        [5.3, 2.5],
+        [5.5, 3.7],
+        [6.2, 1.4],
+        [6.5, 2.6],
+        [6.8, 3.8]
+      ],
+      healthy: [
+        // Fill the rest of the area with green points
+        ...Array.from({ length: 20 }, (_, x) =>
+          Array.from({ length: 20 }, (_, y) => [(x + 1) / 2, (y + 1) / 2])
+        )
+          .flat()
+          .filter(
+            ([x, y]) =>
+              !(
+                (x <= 2.8 && y <= 3.8) ||
+                (x >= 3.1 && x <= 4.8 && y <= 3.8) ||
+                (x >= 5.1 && x <= 6.8 && y <= 3.8)
+              )
+          )
+      ]
+    }
   }
 
   useEffect(() => {
@@ -177,21 +220,25 @@ const OrchardManagement = () => {
                   <div className='mt-2 bg-yellow-200 rounded-full h-2'></div>
                 </Card>
 
-                <Card className='p-4' bgColor={'bg-[#FAEBEB]'}>
+                <Card className='p-4' bgColor={'bg-white'}>
                   <div className='flex justify-between items-center mb-2'>
                     <h2 className='font-semibold'>Production</h2>
-                    <RotateCw />
                   </div>
-                  <div className='h-32 flex items-end space-x-2'>
-                    <div className='bg-teal-500 w-1/4 h-full'></div>
-                    <div className='bg-blue-300 w-1/4 h-3/4'></div>
-                    <div className='bg-purple-500 w-1/4 h-5/6'></div>
-                    <div className='bg-yellow-500 w-1/4 h-1/2'></div>
-                  </div>
-                  <div className='text-center mt-2'>weeks</div>
+
+                  <LineChart
+                    labels={[0, 15, 30, 45, 60, 75]}
+                    data={farmMetrics.estimatedAppleYield}
+                    title='Estimated Apple Count (tonnes)'
+                  />
                 </Card>
                 <Card bgColor={'bg-[#FAEBEB]'}>
                   <PieChart dataSet={chance} labels={disease} />
+                </Card>
+                <Card bgColor={'bg-[#FAEBEB]'}>
+                  <PrecisionMap
+                    data={farmMetrics.precisionMapData}
+                    title='2D Precision Map'
+                  />
                 </Card>
               </div>
             </>
