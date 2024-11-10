@@ -28,8 +28,8 @@ const RegisterBtn = styled.button`
   }
 `
 
-const Auth = () => {
-  const { loginWithRedirect, isAuthenticated, logout, user } = useAuth0()
+const Auth = ({ isAuthenticated }) => {
+  const { loginWithRedirect, logout, user } = useAuth0()
   return isAuthenticated ? (
     <div className='flex items-center gap-3'>
       <RegisterBtn
