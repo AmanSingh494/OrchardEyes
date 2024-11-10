@@ -64,6 +64,11 @@ const LandingPage = () => {
         <Chatbot />
         <PreferedOrchs />
         <FooterSection />
+        <div className='flex flex-col text-lg absolute right-5 top-[20vh] text-white'>
+          <span> Test User details</span>
+          <span>Email - test@gmail.com</span>
+          <span>password - test@123</span>
+        </div>
       </MainContainer>
     </>
   )

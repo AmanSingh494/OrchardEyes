@@ -63,7 +63,9 @@ const Auth = ({ isAuthenticated }) => {
       </RegisterBtn>
       <LoginBtn
         onClick={() => {
-          loginWithRedirect()
+          loginWithRedirect({
+            appState: { returnTo: '/connect' }
+          })
         }}
       >
         Login

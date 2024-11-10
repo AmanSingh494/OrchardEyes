@@ -33,7 +33,7 @@ const OrchardManagement = () => {
     },
     pestSeverity: 35, // on a scale of 1-100
     predictedDiseases: {
-      disease: ['disease1', 'disease2', 'noDisease'],
+      disease: ['Apple scab', 'Fire blight', 'No Disease'],
       chance: [10, 43, 47] // percentages
     },
     appleCount: 1200, // total number of apples
@@ -176,6 +176,14 @@ const OrchardManagement = () => {
                   otherStyles={'border border-[#48bc48]'}
                 >
                   <h2 className='font-semibold mb-2 w-[25vw]'>Overall</h2>
+                  <div className='text-lg'>
+                    <span>Esitimated Yield :</span>
+                    <span> 87 Tonnes</span>
+                  </div>
+                  <div className='text-lg'>
+                    <span>Pest Outbreak : </span>
+                    <span> Codling Moth</span>
+                  </div>
                   {/* Content for Overall card */}
                 </Card>
 

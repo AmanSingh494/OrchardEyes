@@ -11,6 +11,7 @@ import ModelsReport from './pages/ModelsReport'
 import ConnectDrone from './components/connectDrone'
 import DroneComponent from './components/Drone3d'
 import ProtectedRoute from './components/ProtectedRoute'
+import OrchardPage from './pages/OrchardPage'
 
 function App() {
   return <AppContent />
@@ -47,7 +48,7 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
-        <Route path='/3dmodel' element={<DroneComponent />} />
+        <Route path='/orchard' element={<OrchardPage />} />
       </Routes>
     </>
   )
