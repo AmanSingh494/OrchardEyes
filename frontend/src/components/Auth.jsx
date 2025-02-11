@@ -44,11 +44,20 @@ const Auth = ({ isAuthenticated }) => {
       >
         Log Out
       </RegisterBtn>
-      <img
-        src={user.picture}
-        alt={user.name}
-        className='rounded-full h-[7vh]'
-      />
+      {user.img ? (
+        <img
+          src={user.picture}
+          alt={user.name}
+          className='rounded-full h-[7vh]'
+        />
+      ) : (
+        <div
+          className='rounded-full h-[7vh] w-[7vh] bg-[#7812b7] text-white text-2xl flex items-center justify-center'
+          style={{ 'font-family': 'Sour Gummy, sans-serif' }}
+        >
+          {user.name.charAt(0).toUpperCase()}
+        </div>
+      )}
     </div>
   ) : (
     <div>

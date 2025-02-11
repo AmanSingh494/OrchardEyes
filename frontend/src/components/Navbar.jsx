@@ -9,11 +9,15 @@ const NavbarContainer = styled.nav.withConfig({
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  padding: 1rem 4rem;
-
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  padding: 1vh 1.5rem;
   box-sizing: border-box;
-  background-color: ${({ background }) => background || 'transparent'};
+  background-color: white;
+  z-index: 1000;
+  border-bottom: 1px solid #e3e1e1;
 `
 
 const Logo = styled.div`
@@ -45,7 +49,10 @@ const NavLink = styled.li`
 const Navbar = ({ background, isAuthenticated }) => {
   const navigate = useNavigate()
   return (
-    <NavbarContainer background={background}>
+    <nav
+      // background={background}
+      className='shadow hidden sm:flex bg-white justify-between items-center fixed top-0 left-0 w-full p-[1vh_1.5rem] box-border bg-white z-[1000] border-b border-[#e3e1e1]'
+    >
       <Logo>
         <LogoImage src={LogoImg} alt='apple-orchard-logo' />
       </Logo>
@@ -80,7 +87,7 @@ const Navbar = ({ background, isAuthenticated }) => {
         </NavLink>
         <Auth isAuthenticated={isAuthenticated} />
       </NavLinks>
-    </NavbarContainer>
+    </nav>
   )
 }
 

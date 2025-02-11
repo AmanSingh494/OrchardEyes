@@ -13,31 +13,17 @@ const SidebarLeft = () => {
 
   return (
     <div
-      className={`fixed top-0 left-0 h-screen w-64 bg-[#E2F0E2]  rounded-r-2xl z-50 text-gray-700 p-4 transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-60'} border border-green-500`}
+      className={`fixed bottom-0 sm:top-0 left-0 h-auto sm:h-screen w-screen sm:w-40 sm:bg-[#ffffff] rounded-r-2xl z-50 text-gray-700 p-3 transition-transform duration-300 ease-in-out sm:border sm:border-[#e3e1e1] sm:pt-[15vh] sm:shadow`}
     >
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className='absolute -right-4 top-1/2 bg-green-500 text-white p-1 rounded-full shadow-lg'
-      >
-        <ChevronRight
-          size={20}
-          className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-        />
-      </button>
-
-      <div className='flex items-center mb-8'>
-        <img src={logo} alt='orchard eyes logo' className='w-[15vw]' />
-      </div>
-
       <nav className='flex-grow'>
-        <ul className='space-y-2'>
-          <li>
+        <ul className='flex flex-row sm:flex-col sm:items-start items-center justify-around border shadow sm:border-[0] rounded-xl bg-white mx-4 py-1'>
+          <li className='flex items-center'>
             <a
               href='#'
               className='flex items-center p-2 hover:bg-green-100 rounded-md'
             >
-              <Home className='mr-3' size={20} />
-              <span>Home</span>
+              <Home size={22} />
+              <span className='hidden sm:flex'>Home</span>
             </a>
           </li>
           <li>
@@ -45,8 +31,8 @@ const SidebarLeft = () => {
               href='#'
               className='flex items-center p-2 bg-green-200 rounded-md'
             >
-              <LayoutDashboard className='mr-3' size={20} />
-              <span>Dashboard</span>
+              <LayoutDashboard size={22} />
+              <span className='hidden sm:flex'>Dashboard</span>
             </a>
           </li>
           <li>
@@ -54,8 +40,8 @@ const SidebarLeft = () => {
               href='#'
               className='flex items-center p-2 hover:bg-green-100 rounded-md'
             >
-              <User className='mr-3' size={20} />
-              <span>Profile</span>
+              <User size={22} />
+              <span className='hidden sm:flex'>Profile</span>
             </a>
           </li>
           <li>
@@ -63,8 +49,8 @@ const SidebarLeft = () => {
               href='#'
               className='flex items-center p-2 hover:bg-green-100 rounded-md'
             >
-              <Settings className='mr-3' size={20} />
-              <span>Settings</span>
+              <Settings size={22} />
+              <span className='hidden sm:flex'>Settings</span>
             </a>
           </li>
           <li>
@@ -72,8 +58,8 @@ const SidebarLeft = () => {
               href='#'
               className='flex items-center p-2 hover:bg-green-100 rounded-md'
             >
-              <HelpCircle className='mr-3' size={20} />
-              <span>Help</span>
+              <HelpCircle size={22} />
+              <span className='hidden sm:flex'>Help</span>
             </a>
           </li>
         </ul>
