@@ -1,8 +1,94 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Footprints, Heart, Droplets, Moon, ArrowRight } from 'lucide-react'
 import Card from './Card'
+import DoughnutChartWithImage from '../components/charts/DoughnutChartWithImage'
+import leafForChart from '../assets/img/leaf_for_chart.svg'
+import appleForChart from '../assets/img/apple_for_chart.png'
 
 const FarmDashboard = () => {
+  const [farmMetrics, setFarmMetrics] = useState(null)
+
+  // Dummy data for development
+  const data = {
+    health: {
+      fruit: {
+        healthy: 86,
+        unhealthy: 14
+      },
+      leaves: {
+        healthy: 90,
+        unhealthy: 10
+      }
+    },
+    weather: {
+      temperature: 32, // in degrees Celsius
+      humidity: 50, // in percentage
+      prediction: 'Rainy' // could be "cloudy", "sunny", or "rain"
+    },
+    pestSeverity: 35, // on a scale of 1-100
+    predictedDiseases: {
+      disease: ['Apple scab', 'Fire blight', 'No Disease'],
+      chance: [10, 43, 47] // percentages
+    },
+    appleCount: 1200, // total number of apples
+    estimatedAppleYield: [0, 3.2, 5.5, 2.3, 4.1, 6.7, 3.8], // in tonnes
+    precisionMapData: {
+      pestDisease: [
+        [1.1, 1.2],
+        [1.3, 2.1],
+        [1.5, 3.3],
+        [2.2, 1.4],
+        [2.5, 2.6],
+        [2.8, 3.1]
+      ],
+      lowWater: [
+        [3.1, 1.2],
+        [3.3, 2.4],
+        [3.5, 3.6],
+        [4.2, 1.1],
+        [4.5, 2.3],
+        [4.8, 3.5]
+      ],
+      nutrientDeficiency: [
+        [5.1, 1.3],
+        [5.3, 2.5],
+        [5.5, 3.7],
+        [6.2, 1.4],
+        [6.5, 2.6],
+        [6.8, 3.8]
+      ],
+      healthy: [
+        // Fill the rest of the area with green points
+        ...Array.from({ length: 20 }, (_, x) =>
+          Array.from({ length: 20 }, (_, y) => [(x + 1) / 2, (y + 1) / 2])
+        )
+          .flat()
+          .filter(
+            ([x, y]) =>
+              !(
+                (x <= 2.8 && y <= 3.8) ||
+                (x >= 3.1 && x <= 4.8 && y <= 3.8) ||
+                (x >= 5.1 && x <= 6.8 && y <= 3.8)
+              )
+          )
+      ]
+    }
+  }
+
+  useEffect(() => {
+    setFarmMetrics(data)
+  }, [])
+  const {
+    health: {
+      fruit: { healthy: healthyFruits, unhealthy: unhealthyFruits } = {},
+      leaves: { healthy: healthyLeaves, unhealthy: unhealthyLeaves } = {}
+    } = {},
+    weather: { temperature, humidity, prediction } = {},
+    pestSeverity,
+    predictedDiseases: { disease, chance } = {},
+    appleCount,
+    production
+  } = farmMetrics || {}
   return (
     <div className='p-4 md:p-6 max-w-xl mx-auto'>
       <div className='grid grid-cols-2 gap-4'>
@@ -13,8 +99,8 @@ const FarmDashboard = () => {
           otherStyles='relative overflow-hidden'
         >
           <div className='w-full h-full'>
-            <h3 className='text-sky-900 text-small mb-2'>Farm Health</h3>
-            <p className='text-3xl font-semibold text-sky-900 mb-1'>95%</p>
+            <h3 className='text-sky-900 text-xl font-bold mb-2'>Farm Health</h3>
+            <p className='text-xl font-semibold text-sky-900 mb-1'>95%</p>
             {/* <div className='absolute bottom-4 right-4 w-16 h-16 bg-sky-200 rounded-full flex items-center justify-center'>
               <Footprints className='text-sky-600' size={24} />
             </div> */}
@@ -23,20 +109,32 @@ const FarmDashboard = () => {
 
         {/* Crop Vitals Card */}
         <Card
-          margin='mb-0'
-          bgColor='bg-rose-100'
-          otherStyles='relative overflow-hidden'
+          className='p-4'
+          bgColor={'bg-[#EBFAEB]'}
+          otherStyles={
+            'border border-[#81ec81] flex items-center justify-between'
+          }
         >
-          <div className='w-full h-full'>
-            <h3 className='text-rose-900 font-medium mb-2'>Crop Vitals</h3>
-            <p className='text-2xl font-semibold text-rose-900 mb-1'>Healthy</p>
-            <div className='text-sm text-rose-700'>
-              <p>Growth: 85%</p>
-              <p>Yield: 92%</p>
+          <h2 className='font-semibold mb-2 text-lg'>Leaves and Fruits</h2>
+          <div className='flex flex-col gap-4'>
+            <div className='flex space-x-4'>
+              <DoughnutChartWithImage
+                img={leafForChart}
+                label1='Healthy leaves'
+                label2='Diseased Leaves'
+                data1={healthyLeaves}
+                data2={unhealthyLeaves}
+              />
             </div>
-            {/* <div className='absolute bottom-4 right-4 w-16 h-16 bg-rose-200 rounded-full flex items-center justify-center'>
-              <Heart className='text-rose-600' size={24} />
-            </div> */}
+            <div className='flex space-x-4'>
+              <DoughnutChartWithImage
+                img={appleForChart}
+                label1='Healthy Apples'
+                label2='Diseased Apples'
+                data1={healthyFruits}
+                data2={unhealthyFruits}
+              />
+            </div>
           </div>
         </Card>
 

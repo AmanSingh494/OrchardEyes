@@ -105,7 +105,7 @@ const OrchardManagement = () => {
       <TopBar classname='sm:hidden' />
       <SidebarLeft />
       <FarmCard />
-      <div className='bg-white p-4 sm:pl-48 flex flex-col gap-6 bg-[#dedede]'>
+      <div className='hidden bg-white p-4 sm:pl-48 flex flex-col gap-6 bg-[#dedede]'>
         <header className='flex justify-between items-start mb-4'>
           <div className='flex items-center'>
             <h1 className='text-lg font-semibold text-gray-800'>
