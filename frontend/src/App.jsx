@@ -9,7 +9,6 @@ import ProfilePage from './components/OwnerPage'
 import OrchardManagement from './pages/FarmManagement'
 import ModelsReport from './pages/ModelsReport'
 import ConnectDrone from './components/connectDrone'
-import DroneComponent from './components/Drone3d'
 import ProtectedRoute from './components/ProtectedRoute'
 import OrchardPage from './pages/OrchardPage'
 
@@ -26,30 +25,25 @@ function AppContent() {
         background={isOrchardRoute ? '#f4f4f4' : 'transparent'}
         isAuthenticated={isAuthenticated}
       />
-      <Routes>
-        <Route path='/' element={<LandingPage />} />
-        <Route path='/ownerPage' element={<ProfilePage />} />
+      <div className='sm:mt-20'>
+        <Routes>
+          <Route path='/' element={<LandingPage />} />
+          <Route path='/ownerPage' element={<ProfilePage />} />
 
-        <Route
-          path='/farm-management'
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <OrchardManagement />
-            </ProtectedRoute>
-          }
-        />
+          <Route path='/farm-management' element={<OrchardManagement />} />
 
-        <Route path='/models-report' element={<ModelsReport />} />
-        <Route
-          path='/connect'
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <ConnectDrone />
-            </ProtectedRoute>
-          }
-        />
-        <Route path='/orchard' element={<OrchardPage />} />
-      </Routes>
+          <Route path='/models-report' element={<ModelsReport />} />
+          <Route
+            path='/connect'
+            element={
+              <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <ConnectDrone />
+              </ProtectedRoute>
+            }
+          />
+          <Route path='/orchard' element={<OrchardPage />} />
+        </Routes>
+      </div>
     </>
   )
 }

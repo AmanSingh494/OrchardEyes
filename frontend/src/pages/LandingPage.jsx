@@ -2,7 +2,7 @@ import landingPageBackground from '../assets/img/landing-page-background.png'
 import styled, { createGlobalStyle } from 'styled-components'
 import PreferedOrchs from '../components/PreferredOrchs'
 import FooterSection from '../components/FooterSection'
-import Chatbot from '../components/Chatbot'
+import Chatbot from '../components/chatbot/Chatbot'
 const GlobalStyle = createGlobalStyle`
   * {
     /* Add your global styles here */

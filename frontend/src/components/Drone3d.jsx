@@ -1,69 +1,92 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { OrbitControls, useGLTF } from '@react-three/drei'
+import { useGLTF } from '@react-three/drei'
+import model from '../assets/3dmodels/model.glb'
 import * as THREE from 'three'
-import model from '../assets/3dmodels/drone.gltf'
 
 function DroneModel() {
-  const group = useRef()
-  const { scene } = useGLTF(model)
+  // Use the GLTF loader to load your model
+  const { scene, animations } = useGLTF(model)
+  const mixerRef = useRef()
+  const groupRef = useRef()
+  // Create an animation mixer for the loaded animations
+  useEffect(() => {
+    if (animations.length > 0) {
+      // Create AnimationMixer
+      const mixer = new THREE.AnimationMixer(scene)
+      mixerRef.current = mixer
 
-  // useEffect(() => {
-  //     const foundPropellers = []
-  //     scene.traverse((child) => {
-  //         if (child.name.includes("propeller")) {
-  //             // Store original position and parent
-  //             const originalPosition = child.position.clone()
-  //             const originalParent = child.parent
-  //             const originalRotation = child.rotation.clone()
-  //             const originalScale = child.scale.clone()
+      const droneAnimationName = 'droneAction' // Replace with your drone movement animation name
+      const propellerAnimations = [
+        'propeller_node_1Action',
+        'propeller_node.001Action.002',
+        'propeller_node_0Action',
+        'propellerAction'
+      ] // Replace with your propeller animation names
 
-  //             // Create rotation wrapper that will stay at the propeller's position
-  //             const wrapper = new THREE.Group()
-  //             wrapper.position.copy(originalPosition)
-  //             wrapper.rotation.copy(originalRotation)
-  //             wrapper.scale.copy(originalScale)
+      // Play the drone movement animation
+      const droneClip = animations.find(
+        (clip) => clip.name === droneAnimationName
+      )
+      if (droneClip) {
+        const droneAction = mixer.clipAction(droneClip)
 
-  //             // Add the propeller to the wrapper
-  //             wrapper.add(child)
-  //             originalParent.add(wrapper)
+        droneAction.setLoop(THREE.LoopOnce, 1)
+        droneAction.clampWhenFinished = true
+        droneAction.play()
+      } else {
+        console.error(`Drone animation "${droneAnimationName}" not found.`)
+      }
 
-  //             foundPropellers.push(wrapper)
-  //         }
-  //     })
-  //     setPropellers(foundPropellers)
-  // }, [scene])
+      // Play all propeller animations
+      propellerAnimations.forEach((name) => {
+        const clip = animations.find((clip) => clip.name === name)
+        if (clip) {
+          const action = mixer.clipAction(clip)
+          // action.setLoop(THREE.LoopOnce, 1)
+          // action.clampWhenFinished = true
+          action.play()
+        } else {
+          console.error(`Propeller animation "${name}" not found.`)
+        }
+      })
+      // Update the mixer in the render loop
+      const clock = new THREE.Clock()
+      const animate = () => {
+        requestAnimationFrame(animate)
+        mixer.update(clock.getDelta())
+      }
+      animate()
+      // Cleanup on unmount
+      return () => mixer.stopAllAction()
+    }
+  }, [scene, animations])
 
-  // Lift and rotate propellers
-  useFrame((state, delta) => {
-    // Use a sine wave to create a smooth up and down hover effect
+  useFrame((state) => {
     const time = state.clock.getElapsedTime()
     const hoverHeight = Math.sin(time * 2) * 0.2 // Adjust the frequency and amplitude as needed
-    group.current.position.z = hoverHeight
-
-    // propellers.forEach((propeller) => {
-    //     propeller.rotation.z += delta * 20 // Rotate propellers around their Z-axis
-    // })
+    if (groupRef.current) {
+      groupRef.current.position.y = hoverHeight
+    }
   })
-
   return (
-    <group ref={group} scale={[0.015, 0.015, 0.015]}>
-      <primitive object={scene} />
-    </group>
+    <primitive
+      ref={groupRef}
+      object={scene}
+      scale={[0.03, 0.03, 0.03]}
+      rotation={[-1, 0, Math.PI]}
+    />
   )
 }
 
-export default function DroneComponent() {
-  const [isLifted, setIsLifted] = useState(false)
-
+export default function droneComponent() {
   return (
-    <div style={{ width: '60vw', height: '60vh' }}>
-      <Canvas camera={{ position: [0, -7, 5] }} shadows>
+    <div className='h-[90vh] w-[100vw] relative'>
+      <Canvas>
         <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} castShadow />
-        <directionalLight position={[5, 5, 5]} intensity={1} castShadow />
+        <directionalLight position={[10, 10, 10]} />
 
-        <DroneModel isLifted={isLifted} />
+        <DroneModel />
       </Canvas>
     </div>
   )
