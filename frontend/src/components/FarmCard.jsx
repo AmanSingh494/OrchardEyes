@@ -5,26 +5,19 @@ import Card from './Card'
 const FarmDashboard = () => {
   return (
     <div className='p-4 md:p-6 max-w-xl mx-auto'>
-      <div className='flex items-center justify-between mb-6'>
-        <div>
-          <h1 className='text-2xl font-semibold'>Hi Farmer 👋</h1>
-          <p className='text-gray-500 text-sm'>Aug 12, 2023</p>
-        </div>
-      </div>
-
       <div className='grid grid-cols-2 gap-4'>
         {/* Farm Health Card */}
         <Card
           margin='mb-0'
-          bgColor='bg-sky-100'
+          bgColor='bg-green-100'
           otherStyles='relative overflow-hidden'
         >
           <div className='w-full h-full'>
-            <h3 className='text-sky-900 font-medium mb-2'>Farm Health</h3>
+            <h3 className='text-sky-900 text-small mb-2'>Farm Health</h3>
             <p className='text-3xl font-semibold text-sky-900 mb-1'>95%</p>
-            <div className='absolute bottom-4 right-4 w-16 h-16 bg-sky-200 rounded-full flex items-center justify-center'>
+            {/* <div className='absolute bottom-4 right-4 w-16 h-16 bg-sky-200 rounded-full flex items-center justify-center'>
               <Footprints className='text-sky-600' size={24} />
-            </div>
+            </div> */}
           </div>
         </Card>
 
@@ -41,9 +34,9 @@ const FarmDashboard = () => {
               <p>Growth: 85%</p>
               <p>Yield: 92%</p>
             </div>
-            <div className='absolute bottom-4 right-4 w-16 h-16 bg-rose-200 rounded-full flex items-center justify-center'>
+            {/* <div className='absolute bottom-4 right-4 w-16 h-16 bg-rose-200 rounded-full flex items-center justify-center'>
               <Heart className='text-rose-600' size={24} />
-            </div>
+            </div> */}
           </div>
         </Card>
 

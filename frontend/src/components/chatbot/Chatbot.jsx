@@ -152,7 +152,6 @@ const Chatbot = () => {
                 {msg.text}
               </Message>
             ))}
-            {/* {gettingPrediction && ( */}
             <Message sender='bot'>
               <SyncLoader
                 color='#7c0a0a'
@@ -161,7 +160,6 @@ const Chatbot = () => {
                 loading={gettingPrediction}
               />
             </Message>
-            {/* )} */}
           </MessagesContainer>
           <InputContainer>
             <TextArea
