@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, send_file
 from auth import generate_token, token_required
-from utils import log_request_info, allowed_file
+from ai.server.utils.utils import log_request_info, allowed_file
 from plant_part_detect import get_predictions_with_annotations
 import io
 
