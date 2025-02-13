@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, send_file
 from auth import generate_token, token_required
 from ai.server.utils.utils import log_request_info, allowed_file
-from plant_part_detect import get_predictions_with_annotations
+from ai.models.image_processing.yolo_detections.plant_part_detect import get_predictions_with_annotations
 import io
 from ai.models.image_processing.ocr_tesseract import SoilHealthOCR
 app = Flask(__name__)
@@ -95,6 +95,28 @@ def process_soil_report(current_user):
     else:
         return jsonify({'message': 'Invalid file format'}), 400
     
+
+# Initialize chatbot
+# chatbot = initialize_chatbot(index_name="apple-chatbot", k=2)
+
+# @app.route("/ask", methods=["POST"])
+# def ask():
+#     try:
+#         data = request.json
+#         query = data.get("query")
+        
+#         if not query:
+#             return jsonify({"error": "Query is required"}), 400
+        
+#         # Get response from chatbot
+#         result = chatbot.ask(query)
+#         return jsonify(result), 200
+    
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
+    
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
