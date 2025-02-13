@@ -12,10 +12,12 @@ import LineChart from '../components/charts/LineChart'
 import PrecisionMap from '../components/charts/PrecisonMap'
 import TopBar from '../components/TopBar'
 import FarmCard from '../components/FarmCard'
+import QuickActions from './QuickActions'
+import Chatbot from '../components/chatbot/Chatbot'
 
 const OrchardManagement = () => {
   const [farmMetrics, setFarmMetrics] = useState(null)
-
+  const [activeTab, setActiveTab] = useState('Dashboard')
   // Dummy data for development
   const data = {
     health: {
@@ -102,10 +104,14 @@ const OrchardManagement = () => {
 
   return (
     <>
-      <TopBar classname='sm:hidden' />
-      <SidebarLeft />
-      <FarmCard />
-      <div className='hidden bg-white p-4 sm:pl-48 flex flex-col gap-6 bg-[#dedede]'>
+      <TopBar classname='sm:hidden' activeTab={activeTab} />
+      <SidebarLeft activeTab={activeTab} setActiveTab={setActiveTab} />
+      {activeTab === 'Dashboard' && <FarmCard />}
+      {activeTab === 'Profile' && <h1>Profile</h1>}
+      {activeTab === 'Quick Actions' && <QuickActions />}
+      {activeTab === 'Orchard Ai' && <Chatbot />}
+      {activeTab === 'Home' && <h1>Home</h1>}
+      <div className='hidden sm:flex  bg-white p-4 sm:pl-48 flex flex-col gap-6 bg-[#dedede]'>
         <header className='flex justify-between items-start mb-4'>
           <div className='flex items-center'>
             <h1 className='text-lg font-semibold text-gray-800'>

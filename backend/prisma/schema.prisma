@@ -1,7 +1,8 @@
 // schema.prisma
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 generator client {
@@ -9,66 +10,71 @@ generator client {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
-  email     String   @unique
+  email     String    @unique
   education String?
   dob       DateTime?
   farms     Farm[]
+  chats     Chat[]
 }
 
 model Farm {
-  id        Int      @id @default(autoincrement())
-  size      Float    // Size in hectares or acres
-  species   String   // Species of apples
-  location  String   // Location description (could be city, region, etc.)
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
-  analysis  Analysis[]
+  id       Int        @id @default(autoincrement())
+  size     Float // Size in hectares or acres
+  species  String // Species of apples
+  location String // Location description (could be city, region, etc.)
+  userId   Int
+  user     User       @relation(fields: [userId], references: [id])
+  analysis Analysis[]
+  Soil     Soil[]
 }
 
 model Analysis {
-  id              Int       @id @default(autoincrement())
-  yield           Int       // Apple count (yield)
-  disease         Json      // JSON storing disease name and location
-  pests           Json      // JSON storing pest name and location
-  waterStress     Float     // Water stress level (numerical value)
-  chlorophyllContent Float  // Chlorophyll content (numerical value)
-  farmId          Int
-  farm            Farm      @relation(fields: [farmId], references: [id])
+  id                 Int      @id @default(autoincrement())
+  yield              Int // Apple count (yield)
+  disease            Json // JSON storing disease name and location
+  pests              Json // JSON storing pest name and location
+  waterStress        Float // Water stress level (numerical value)
+  chlorophyllContent Float // Chlorophyll content (numerical value)
+  farmId             Int
+  farm               Farm     @relation(fields: [farmId], references: [id])
+  dateTime           DateTime @default(now())
 }
 
 model Soil {
-  id                    Int      @id @default(autoincrement())
-  nutrientLevel         Json     // JSON containing nutrient levels (e.g., Nitrogen, Phosphorus)
-  soilType              String   // Type of soil (e.g., sandy, clay, loam)
-  phLevel              Float    // pH level of the soil
-  organicMatterContent  Float    // Percentage of organic matter
-  moistureLevel        Float    // Soil moisture content percentage
-  salinityLevel        Float    // Soil salinity level
-  temperature          Float    // Temperature of the soil
-  bulkDensity          Float    // Bulk density of the soil
-  texture              String   // Texture of the soil (e.g., sandy, loamy)
-  lastTested           DateTime // Date when the soil was last tested
-  soilDepth            Float    // Depth of the soil being tested (e.g., in cm)
+  id                        Int      @id @default(autoincrement())
+  nutrientLevel             Json // JSON containing nutrient levels (e.g., Nitrogen, Phosphorus)
+  soilType                  String // Type of soil (e.g., sandy, clay, loam)
+  phLevel                   Float // pH level of the soil
+  organicMatterContent      Float // Percentage of organic matter
+  moistureLevel             Float // Soil moisture content percentage
+  salinityLevel             Float // Soil salinity level
+  temperature               Float // Temperature of the soil
+  bulkDensity               Float // Bulk density of the soil
+  texture                   String // Texture of the soil (e.g., sandy, loamy)
+  lastTested                DateTime // Date when the soil was last tested
+  soilDepth                 Float // Depth of the soil being tested (e.g., in cm)
   moistureRetentionCapacity Float // Water retention capacity of the soil
 
-  farmId               Int      // Foreign key to Farm table
-  farm                 Farm     @relation(fields: [farmId], references: [id])
+  farmId Int // Foreign key to Farm table
+  farm   Farm @relation(fields: [farmId], references: [id])
 }
+
 model Chat {
-  id          Int      @id @default(autoincrement())
-  userId      Int      // Foreign key referencing the User
-  startTime   DateTime @default(now()) // Start time of the chat session
-  endTime     DateTime? // End time of the chat session (nullable)
-  messages    Message[] // Related messages for the chat
+  id        Int       @id @default(autoincrement())
+  userId    Int // Foreign key referencing the User
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  startTime DateTime  @default(now()) // Start time of the chat session
+  endTime   DateTime? // End time of the chat session (nullable)
+  messages  Message[] // Related messages for the chat
 }
 
 model Message {
   id        Int      @id @default(autoincrement())
-  chatId    Int      // Foreign key referencing the Chat
-  sender    String   // Either 'user' or 'bot'
-  content   String   // The message content (text, can be large)
+  chatId    Int // Foreign key referencing the Chat
+  sender    String // Either 'user' or 'bot'
+  content   String // The message content (text, can be large)
   timestamp DateTime @default(now()) // Timestamp for the message
   chat      Chat     @relation(fields: [chatId], references: [id])
 }

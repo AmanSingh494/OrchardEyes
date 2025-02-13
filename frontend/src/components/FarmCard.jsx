@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { Footprints, Heart, Droplets, Moon, ArrowRight } from 'lucide-react'
+import {
+  Footprints,
+  Heart,
+  Droplets,
+  Moon,
+  ArrowRight,
+  Leaf,
+  AlertTriangle,
+  Bot
+} from 'lucide-react'
 import Card from './Card'
 import DoughnutChartWithImage from '../components/charts/DoughnutChartWithImage'
 import leafForChart from '../assets/img/leaf_for_chart.svg'
 import appleForChart from '../assets/img/apple_for_chart.png'
+import sunCloud from '../assets/img/sun_cloud.svg'
+import { Link, Outlet } from 'react-router-dom'
 
 const FarmDashboard = () => {
   const [farmMetrics, setFarmMetrics] = useState(null)
@@ -95,6 +106,51 @@ const FarmDashboard = () => {
         {/* Farm Health Card */}
         <Card
           margin='mb-0'
+          bgColor='bg-gradient-to-br from-emerald-500 to-emerald-600'
+          otherStyles={'col-span-2'}
+        >
+          <Link to={'/analysis'}>
+            <div className='w-full text-white'>
+              <h2
+                className='text-lg font-semibold mb-4'
+                style={{ fontFamily: '' }}
+              >
+                OVERVIEW
+              </h2>
+              <div className='grid grid-cols-2 sm:grid-cols-2 gap-2'>
+                <div className='flex items-start space-x-3'>
+                  <div className='p-2 bg-white/20 backdrop-blur-sm rounded-full'>
+                    <Leaf className='text-white' size={24} />
+                  </div>
+                  <div>
+                    <p className='text-sm text-white/80'>Status</p>
+                    <p className='font-semibold'>Healthy</p>
+                  </div>
+                </div>
+                <div className='flex items-start space-x-3'>
+                  <div className='p-2 bg-white/20 backdrop-blur-sm rounded-full'>
+                    <AlertTriangle className='text-white' size={24} />
+                  </div>
+                  <div>
+                    <p className='text-sm text-white/80'>Disease Risk</p>
+                    <p className='font-semibold'>None Detected</p>
+                  </div>
+                </div>
+                <div className='col-span-2'>
+                  <p className='text-sm text-white/80 mb-1'>Estimated Yield</p>
+                  <div className='w-full bg-white/20 rounded-full h-2.5'>
+                    <div className='bg-white h-2.5 rounded-full w-3/4'></div>
+                  </div>
+                  <p className='text-sm mt-1'>
+                    75% of target (12.5 tons/hectare)
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Link>
+        </Card>
+        {/* <Card
+          margin='mb-0'
           bgColor='bg-green-100'
           otherStyles='relative overflow-hidden'
         >
@@ -103,20 +159,20 @@ const FarmDashboard = () => {
             <p className='text-xl font-semibold text-sky-900 mb-1'>95%</p>
             {/* <div className='absolute bottom-4 right-4 w-16 h-16 bg-sky-200 rounded-full flex items-center justify-center'>
               <Footprints className='text-sky-600' size={24} />
-            </div> */}
+            </div>
           </div>
-        </Card>
+        </Card> */}
 
         {/* Crop Vitals Card */}
-        <Card
+        {/* <Card
           className='p-4'
-          bgColor={'bg-[#EBFAEB]'}
+          bgColor={'bg-[#ffd6d6]'}
           otherStyles={
             'border border-[#81ec81] flex items-center justify-between'
           }
         >
           <h2 className='font-semibold mb-2 text-lg'>Leaves and Fruits</h2>
-          <div className='flex flex-col gap-4'>
+          <div className='flex flex-col gap-4 items-center'>
             <div className='flex space-x-4'>
               <DoughnutChartWithImage
                 img={leafForChart}
@@ -136,38 +192,61 @@ const FarmDashboard = () => {
               />
             </div>
           </div>
-        </Card>
+        </Card> */}
 
-        {/* Irrigation Card */}
+        {/* chatbot card */}
         <Card
           margin='mb-0'
-          bgColor='bg-violet-100'
-          otherStyles='relative overflow-hidden'
+          bgColor='bg-gradient-to-br from-indigo-500 to-indigo-600'
+          otherStyles=' col-span-1'
         >
-          <div className='w-full h-full'>
-            <h3 className='text-violet-900 font-medium mb-2'>Irrigation</h3>
-            <p className='text-2xl font-semibold text-violet-900 mb-1'>
-              4/6 Zones
+          <div className=' flex items-start flex-col gap-1'>
+            <p className='text-2xl text-bold text-indigo-200 mb-1'>
+              Personlised
             </p>
-            <p className='text-sm text-violet-700'>Next: Zone 5 in 2h</p>
-            <div className='absolute bottom-4 right-4 w-16 h-16 bg-violet-200 rounded-full flex items-center justify-center'>
-              <Droplets className='text-violet-600' size={24} />
+            <div className='flex items-center justify-center gap-4'>
+              <p className='text-2xl text-indigo-200 mb-1'>Insights</p>
+              <div className='p-2 bg-indigo-200 rounded-full flex items-center justify-center'>
+                <Bot className='text-indigo-600' size={24} />
+              </div>
             </div>
+            {/* <button className='mt-2 bg-indigo-600 text-white px-2 py-2 rounded-lg flex items-center  hover:bg-indigo-700 transition-colors'>
+              <span>Chat now</span>
+              <ArrowRight size={16} />
+            </button> */}
           </div>
         </Card>
 
         {/* Weather Card */}
         <Card
-          margin='mb-0'
-          bgColor='bg-orange-100'
-          otherStyles='relative overflow-hidden'
+          bgColor={'bg-[#cee6f4]'}
+          otherStyles={'border border-[#71c9bd]'}
+          margin={'0'}
         >
-          <div className='w-full h-full'>
-            <h3 className='text-orange-900 font-medium mb-2'>Weather</h3>
-            <p className='text-2xl font-semibold text-orange-900 mb-1'>28°C</p>
-            <p className='text-sm text-orange-700'>Sunny • No Rain</p>
-            <div className='absolute bottom-4 right-4 w-16 h-16 bg-orange-200 rounded-full flex items-center justify-center'>
-              <Moon className='text-orange-600' size={24} />
+          <div className='flex items-center justify-between gap-4'>
+            <div className='flex items-center'>
+              <img src={sunCloud} alt='sun behing clouds' />
+            </div>
+            <div className='flex flex-col'>
+              <div className='text-right flex gap-2  items-center'>
+                <span className='text-2xl text-semibold text-blue-700'>
+                  {temperature}&#176;
+                </span>
+                <span className='block text-xl text-bold text-blue-700'>
+                  {prediction}
+                </span>
+              </div>
+              <div className='border-t border-black my-2'></div>
+              <div className='flex flex-col'>
+                <div className='text-right flex gap-2 items-center'>
+                  <span className='text-md text-semibold text-blue-700'>
+                    {humidity}%
+                  </span>
+                  <span className='block text-sm text-semibold text-blue-700'>
+                    humidity
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </Card>
@@ -187,7 +266,7 @@ const FarmDashboard = () => {
                 <div className='w-2 h-2 bg-green-500 rounded-full'></div>
               </div>
               <div>
-                <p className='font-medium'>Check Irrigation System</p>
+                <p className='text-xl'>Check Irrigation System</p>
                 <p className='text-sm text-gray-500'>Completed</p>
               </div>
             </div>
@@ -200,7 +279,7 @@ const FarmDashboard = () => {
                 <div className='w-2 h-2 bg-yellow-500 rounded-full'></div>
               </div>
               <div>
-                <p className='font-medium'>Apply Fertilizer</p>
+                <p className='text-xl'>Apply Fertilizer</p>
                 <p className='text-sm text-gray-500'>2 of 4 zones done</p>
               </div>
             </div>

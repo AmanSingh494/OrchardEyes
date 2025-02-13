@@ -4,6 +4,7 @@ import VoiceInput from './VoiceInput'
 import ChatBotImg from '../../assets/img/chatbot-img.png'
 import { getPrediction } from '../../utils/gradioConfig'
 import { SyncLoader } from 'react-spinners'
+import { Mic, MicOff } from 'lucide-react'
 const Main = styled.div.withConfig({
   shouldForwardProp: (prop) => !['isOpened'].includes(prop)
 })`
@@ -42,31 +43,17 @@ const Message = styled.div.withConfig({
   border-radius: 10px;
 `
 
-const InputContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-`
-
 const Button = styled.button`
   padding: 5px;
 `
-const TextArea = styled.textarea`
-  border: 2px solid;
-  padding: 5px 15px;
-  resize: none;
-  min-height: 42px;
-  max-height: 200px;
-  border-radius: 25px;
-  overflow: hidden;
-`
 
 const Chatbot = () => {
-  const [isOpened, setIsOpened] = useState(false)
+  const [isOpened, setIsOpened] = useState(true)
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [detectedLanguage, setDetectedLanguage] = useState('')
   const [gettingPrediction, setGettingPrediction] = useState(false)
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight)
   const textAreaRef = useRef(null)
   const handleSend = async () => {
     if (input.trim()) {
@@ -130,20 +117,23 @@ const Chatbot = () => {
   useEffect(() => {
     adjustTextareaHeight()
   }, [input])
+  useEffect(() => {
+    console.log(window.innerHeight)
+  }, [])
   return (
     <>
       <Main
-        className='fixed bottom-24 right-4 flex flex-col gap-6 items-end transition-all duration-500'
+        className='sm:fixed right-0 bottom-0 sm:bottom-24 sm:right-4 flex flex-col gap-6 items-end transition-all duration-500'
         isOpened={isOpened}
       >
         {/* {isOpened && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40"></div>
             )} */}
-        <ChatbotContainer
-          className={`bg-white shadow-xl ${isOpened ? 'scale-100' : 'scale-0'} transition-transform duration-500 rounded-md `}
+        <div
+          className={`p-2 w-[100vw] h-[${windowHeight}px] sm:w-72 sm:h-96 flex flex-col justify-between bg-white ${isOpened ? 'scale-100' : 'scale-0'} transition-transform duration-500 rounded-xl sm:shadow-xl`}
         >
-          <div className='bg-red-800 h-10 rounded-md flex items-center px-2 justify-between'>
-            <h3 className='text-white text-lg'>ChatBot</h3>
+          <div className='flex bg-red-800 h-10 rounded-md flex items-center px-2 justify-between'>
+            <h3 className='text-white text-lg'>Orchard AI</h3>
             <i className='fa-solid fa-ellipsis text-white'></i>
           </div>
           <MessagesContainer className='custom-scrollbar text-sm'>
@@ -161,29 +151,44 @@ const Chatbot = () => {
               />
             </Message>
           </MessagesContainer>
-          <InputContainer>
-            <TextArea
-              rows={1}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder='Type a message...'
-              onInput={adjustTextareaHeight}
-              ref={textAreaRef}
-            />
-            {detectedLanguage && <p>Detected language: {detectedLanguage}</p>}
-            <VoiceInput
-              onTranscript={handleVoiceInput}
-              onLanguageDetected={handleLanguageDetected}
-            />
-            <Button onClick={handleSend}>
-              <span className='material-symbols-outlined'>send</span>
-            </Button>
-          </InputContainer>
-        </ChatbotContainer>
+          <div className='fixed bottom-0 left-0 right-0 bg-white p-4'>
+            <div className='max-w-4xl mx-auto'>
+              <div className='relative flex items-center space-x-2'>
+                <textarea
+                  className='w-full bg-gray-100 rounded-full py-3 px-6 pr-24 text-gray-700 
+                     placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 
+                     focus:border-transparent resize-none min-h-[42px] max-h-[200px] overflow-hidden'
+                  rows={1}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder='Type a message...'
+                  onInput={adjustTextareaHeight}
+                  ref={textAreaRef}
+                />
+
+                <div className='absolute right-2 flex items-center space-x-2'>
+                  <VoiceInput
+                    onTranscript={handleVoiceInput}
+                    onLanguageDetected={handleLanguageDetected}
+                    className='p-2 hover:bg-gray-200 rounded-full transition-colors duration-200'
+                  />
+                  <Button
+                    onClick={handleSend}
+                    className='p-2 hover:bg-gray-200 rounded-full transition-colors duration-200'
+                  >
+                    <span className='material-symbols-outlined text-gray-600'>
+                      send
+                    </span>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </Main>
       <div
-        className='w-16 h-16 bg-red-800 rounded-full flex items-center justify-center z-110 fixed bottom-5 right-5 cursor-pointer'
+        className='hidden sm:flex w-16 h-16 bg-red-800 rounded-full items-center justify-center z-110 fixed bottom-5 right-5 cursor-pointer'
         onClick={() => {
           setIsOpened((prevIsOpened) => !prevIsOpened)
         }}

@@ -11,6 +11,7 @@ import ModelsReport from './pages/ModelsReport'
 import ConnectDrone from './components/connectDrone'
 import ProtectedRoute from './components/ProtectedRoute'
 import OrchardPage from './pages/OrchardPage'
+import Chatbot from './components/chatbot/Chatbot'
 
 function App() {
   return <AppContent />
@@ -31,16 +32,17 @@ function AppContent() {
           <Route path='/ownerPage' element={<ProfilePage />} />
 
           <Route path='/farm-management' element={<OrchardManagement />} />
-
-          <Route path='/models-report' element={<ModelsReport />} />
           <Route
-            path='/connect'
+            path='/analysis'
             element={
-              <ProtectedRoute isAuthenticated={isAuthenticated}>
-                <ConnectDrone />
-              </ProtectedRoute>
+              <>
+                <h1>Farm Analysis</h1>
+              </>
             }
           />
+          <Route path='/chatbot' element={<Chatbot />} />
+          <Route path='/models-report' element={<ModelsReport />} />
+          <Route path='/connect' element={<ConnectDrone />} />
           <Route path='/orchard' element={<OrchardPage />} />
         </Routes>
       </div>
