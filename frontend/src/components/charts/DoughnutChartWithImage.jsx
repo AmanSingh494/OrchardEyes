@@ -64,7 +64,7 @@ const DoughnutChartWithImage = ({ img, label1, label2, data1, data2 }) => {
           <img
             src={img}
             alt='Leaf'
-            className='w-4 sm:w-10 h-4 sm:h-10 object-contain'
+            className='w-8 sm:w-10 h-8 sm:h-10 object-contain'
           />
         </div>
       )}
