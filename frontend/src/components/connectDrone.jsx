@@ -23,7 +23,7 @@ const ConnectDrone = () => {
     console.error('QR Error:', err)
   }
   return (
-    <div className='flex flex-col items-center justify-center'>
+    <div className='flex flex-col items-center justify-center h-[70vh] sm:h-[auto] '>
       {isScanning && (
         <div className='h-[50vh] w-52'>
           <Scanner

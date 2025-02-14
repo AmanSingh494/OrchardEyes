@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 import express from 'express'
 import cors from 'cors'
 import twilio from 'twilio'
-
+import userRoutes from './src/routes/user.js'
 dotenv.config()
 
 const app = express()
@@ -36,7 +36,7 @@ app.post('/sendMsg', (req, res) => {
     res.status(500).send('Internal server error')
   }
 })
-
+app.use('/user', userRoutes)
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
 })

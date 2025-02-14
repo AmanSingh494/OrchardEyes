@@ -10,7 +10,9 @@ import {
 import Card from '../components/Card'
 // import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import droneIcon from '../assets/img/drone.png'
-const QuickActions = () => {
+import { useNavigate } from 'react-router-dom'
+const QuickActions = ({ activeTab, setActiveTab }) => {
+  const navigate = useNavigate()
   const actions = [
     {
       //   icon: (
@@ -23,13 +25,16 @@ const QuickActions = () => {
       icon: <img src={droneIcon} className='h-10' />,
       label: 'Connect Drone',
       color: 'bg-blue-100',
-      iconColor: 'text-blue-600'
+      iconColor: 'text-blue-600',
+      route: '/farm-management/drone',
+      routeName: 'My Drone'
     },
     {
       icon: <BarChart2 size={40} />,
       label: 'Analysis',
       color: 'bg-purple-100',
-      iconColor: 'text-purple-600'
+      iconColor: 'text-purple-600',
+      route: '/farm-management/analysis'
     },
     {
       icon: <Sprout size={40} />,
@@ -73,7 +78,12 @@ const QuickActions = () => {
     <div className='p-4 md:p-6 max-w-4xl mx-auto'>
       <div className='grid grid-cols-2 md:grid-cols-3 gap-4 h-[70vh] items-center'>
         {actions.map((action, index) => (
-          <div key={index}>
+          <div
+            key={index}
+            onClick={() => {
+              navigate(action.route)
+            }}
+          >
             <Card
               key={index}
               margin='mb-0'

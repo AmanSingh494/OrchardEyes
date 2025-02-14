@@ -14,11 +14,11 @@ import DoughnutChartWithImage from '../components/charts/DoughnutChartWithImage'
 import leafForChart from '../assets/img/leaf_for_chart.svg'
 import appleForChart from '../assets/img/apple_for_chart.png'
 import sunCloud from '../assets/img/sun_cloud.svg'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 
 const FarmDashboard = () => {
   const [farmMetrics, setFarmMetrics] = useState(null)
-
+  const navigate = useNavigate()
   // Dummy data for development
   const data = {
     health: {
@@ -109,45 +109,48 @@ const FarmDashboard = () => {
           bgColor='bg-gradient-to-br from-emerald-500 to-emerald-600'
           otherStyles={'col-span-2'}
         >
-          <Link to={'/analysis'}>
-            <div className='w-full text-white'>
-              <h2
-                className='text-lg font-semibold mb-4'
-                style={{ fontFamily: '' }}
-              >
-                OVERVIEW
-              </h2>
-              <div className='grid grid-cols-2 sm:grid-cols-2 gap-2'>
-                <div className='flex items-start space-x-3'>
-                  <div className='p-2 bg-white/20 backdrop-blur-sm rounded-full'>
-                    <Leaf className='text-white' size={24} />
-                  </div>
-                  <div>
-                    <p className='text-sm text-white/80'>Status</p>
-                    <p className='font-semibold'>Healthy</p>
-                  </div>
+          <div
+            className='w-full text-white'
+            onClick={() => {
+              navigate('/farm-management/analysis')
+            }}
+          >
+            <h2
+              className='text-lg font-semibold mb-4'
+              style={{ fontFamily: '' }}
+            >
+              OVERVIEW
+            </h2>
+            <div className='grid grid-cols-2 sm:grid-cols-2 gap-2'>
+              <div className='flex items-start space-x-3'>
+                <div className='p-2 bg-white/20 backdrop-blur-sm rounded-full'>
+                  <Leaf className='text-white' size={24} />
                 </div>
-                <div className='flex items-start space-x-3'>
-                  <div className='p-2 bg-white/20 backdrop-blur-sm rounded-full'>
-                    <AlertTriangle className='text-white' size={24} />
-                  </div>
-                  <div>
-                    <p className='text-sm text-white/80'>Disease Risk</p>
-                    <p className='font-semibold'>None Detected</p>
-                  </div>
-                </div>
-                <div className='col-span-2'>
-                  <p className='text-sm text-white/80 mb-1'>Estimated Yield</p>
-                  <div className='w-full bg-white/20 rounded-full h-2.5'>
-                    <div className='bg-white h-2.5 rounded-full w-3/4'></div>
-                  </div>
-                  <p className='text-sm mt-1'>
-                    75% of target (12.5 tons/hectare)
-                  </p>
+                <div>
+                  <p className='text-sm text-white/80'>Status</p>
+                  <p className='font-semibold'>Healthy</p>
                 </div>
               </div>
+              <div className='flex items-start space-x-3'>
+                <div className='p-2 bg-white/20 backdrop-blur-sm rounded-full'>
+                  <AlertTriangle className='text-white' size={24} />
+                </div>
+                <div>
+                  <p className='text-sm text-white/80'>Disease Risk</p>
+                  <p className='font-semibold'>None Detected</p>
+                </div>
+              </div>
+              <div className='col-span-2'>
+                <p className='text-sm text-white/80 mb-1'>Estimated Yield</p>
+                <div className='w-full bg-white/20 rounded-full h-2.5'>
+                  <div className='bg-white h-2.5 rounded-full w-3/4'></div>
+                </div>
+                <p className='text-sm mt-1'>
+                  75% of target (12.5 tons/hectare)
+                </p>
+              </div>
             </div>
-          </Link>
+          </div>
         </Card>
         {/* <Card
           margin='mb-0'
@@ -200,7 +203,12 @@ const FarmDashboard = () => {
           bgColor='bg-gradient-to-br from-indigo-500 to-indigo-600'
           otherStyles=' col-span-1'
         >
-          <div className=' flex items-start flex-col gap-1'>
+          <div
+            className='flex items-start flex-col gap-1'
+            onClick={() => {
+              navigate('/chatbot')
+            }}
+          >
             <p className='text-2xl text-bold text-indigo-200 mb-1'>
               Personlised
             </p>

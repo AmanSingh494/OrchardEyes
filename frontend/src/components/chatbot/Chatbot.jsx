@@ -4,7 +4,7 @@ import VoiceInput from './VoiceInput'
 import ChatBotImg from '../../assets/img/chatbot-img.png'
 import { getPrediction } from '../../utils/gradioConfig'
 import { SyncLoader } from 'react-spinners'
-import { Mic, MicOff } from 'lucide-react'
+import { Mic, MicOff, Send } from 'lucide-react'
 const Main = styled.div.withConfig({
   shouldForwardProp: (prop) => !['isOpened'].includes(prop)
 })`
@@ -24,7 +24,6 @@ const MessagesContainer = styled.div`
   margin-bottom: 10px;
   flex-direction: column;
   align-items: flex-end;
-  height: 40vh;
   overflow-y: scroll;
   letter-spacing: 1px;
 `
@@ -48,13 +47,30 @@ const Button = styled.button`
 `
 
 const Chatbot = () => {
-  const [isOpened, setIsOpened] = useState(true)
+  const [isOpened, setIsOpened] = useState(null)
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [detectedLanguage, setDetectedLanguage] = useState('')
   const [gettingPrediction, setGettingPrediction] = useState(false)
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight)
   const textAreaRef = useRef(null)
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.matchMedia('(max-width: 768px)').matches) {
+        setIsOpened(true)
+      } else {
+        setIsOpened(false)
+      }
+    }
+
+    handleResize() // Check screen size on mount
+    window.addEventListener('resize', handleResize) // Add resize event listener
+
+    return () => {
+      window.removeEventListener('resize', handleResize) // Clean up event listener
+    }
+  }, [])
+
   const handleSend = async () => {
     if (input.trim()) {
       setMessages((prevMessages) => [
@@ -117,26 +133,24 @@ const Chatbot = () => {
   useEffect(() => {
     adjustTextareaHeight()
   }, [input])
-  useEffect(() => {
-    console.log(window.innerHeight)
-  }, [])
   return (
     <>
       <Main
-        className='sm:fixed right-0 bottom-0 sm:bottom-24 sm:right-4 flex flex-col gap-6 items-end transition-all duration-500'
+        className={`sm:fixed right-0 bottom-0 sm:bottom-24 sm:right-4 flex flex-col gap-6 transition-all duration-500 p-2 items-center justify-center sm:shadow-lg sm:rounded-lg ${isOpened ? 'sm:scale-100' : 'sm:scale-0'} transition-transform bg-white`}
         isOpened={isOpened}
       >
         {/* {isOpened && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40"></div>
             )} */}
+
+        <div className='flex bg-gradient-to-br from-red-600 to-red-800 h-10 rounded-md flex items-center px-2 justify-between w-full'>
+          <h3 className='text-white text-lg'>Orchard AI</h3>
+          <i className='fa-solid fa-ellipsis text-white'></i>
+        </div>
         <div
-          className={`p-2 w-[100vw] h-[${windowHeight}px] sm:w-72 sm:h-96 flex flex-col justify-between bg-white ${isOpened ? 'scale-100' : 'scale-0'} transition-transform duration-500 rounded-xl sm:shadow-xl`}
+          className={`w-[90vw] h-[85vh] sm:w-72 sm:h-80 flex flex-col justify-between bg-white  duration-500 rounded-lg relative`}
         >
-          <div className='flex bg-red-800 h-10 rounded-md flex items-center px-2 justify-between'>
-            <h3 className='text-white text-lg'>Orchard AI</h3>
-            <i className='fa-solid fa-ellipsis text-white'></i>
-          </div>
-          <MessagesContainer className='custom-scrollbar text-sm'>
+          <MessagesContainer className='custom-scrollbar text-sm absolute top-0 w-full'>
             {messages.map((msg, index) => (
               <Message key={index} sender={msg.sender}>
                 {msg.text}
@@ -151,11 +165,11 @@ const Chatbot = () => {
               />
             </Message>
           </MessagesContainer>
-          <div className='fixed bottom-0 left-0 right-0 bg-white p-4'>
+          <div className='fixed bottom-0 left-0 right-0 bg-white px-2 py-3 rounded-lg'>
             <div className='max-w-4xl mx-auto'>
               <div className='relative flex items-center space-x-2'>
                 <textarea
-                  className='w-full bg-gray-100 rounded-full py-3 px-6 pr-24 text-gray-700 
+                  className='w-full bg-gray-100 rounded-full p-2  text-gray-700 
                      placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 
                      focus:border-transparent resize-none min-h-[42px] max-h-[200px] overflow-hidden'
                   rows={1}
@@ -177,9 +191,7 @@ const Chatbot = () => {
                     onClick={handleSend}
                     className='p-2 hover:bg-gray-200 rounded-full transition-colors duration-200'
                   >
-                    <span className='material-symbols-outlined text-gray-600'>
-                      send
-                    </span>
+                    <Send size={20} />
                   </Button>
                 </div>
               </div>
@@ -188,7 +200,7 @@ const Chatbot = () => {
         </div>
       </Main>
       <div
-        className='hidden sm:flex w-16 h-16 bg-red-800 rounded-full items-center justify-center z-110 fixed bottom-5 right-5 cursor-pointer'
+        className='hidden sm:flex w-16 h-16 bg-red-800 rounded-full items-center justify-center z-110 fixed bottom-5 right-5 cursor-pointer z-[1000]'
         onClick={() => {
           setIsOpened((prevIsOpened) => !prevIsOpened)
         }}

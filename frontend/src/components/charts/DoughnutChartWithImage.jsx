@@ -51,7 +51,7 @@ const DoughnutChartWithImage = ({ img, label1, label2, data1, data2 }) => {
   }, [])
 
   return (
-    <div className='relative w-20 h-20'>
+    <div className='relative w-25 h-25'>
       <Doughnut data={data} options={options} ref={chartRef} />
       {chartSize.width > 0 && (
         <div

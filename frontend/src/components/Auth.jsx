@@ -23,7 +23,6 @@ const RegisterBtn = styled.button`
   border-radius: 4px;
 
   &:hover {
-    color:;
     background-color: red;
   }
 `
@@ -53,7 +52,7 @@ const Auth = ({ isAuthenticated }) => {
       ) : (
         <div
           className='rounded-full h-[7vh] w-[7vh] bg-[#7812b7] text-white text-2xl flex items-center justify-center'
-          style={{ 'font-family': 'Sour Gummy, sans-serif' }}
+          style={{ fontFamily: 'Sour Gummy, sans-serif' }}
         >
           {user.name.charAt(0).toUpperCase()}
         </div>
@@ -73,7 +72,7 @@ const Auth = ({ isAuthenticated }) => {
       <LoginBtn
         onClick={() => {
           loginWithRedirect({
-            appState: { returnTo: '/connect' }
+            appState: { returnTo: '/farm-management/dashboard' }
           })
         }}
       >

@@ -5,6 +5,7 @@ import SpeechRecognition, {
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import '../../styles/voiceInput.css'
+import { Mic, MicOff } from 'lucide-react'
 const MicBtn = styled.span`
   position: relative;
 `
@@ -63,23 +64,19 @@ const VoiceInput = ({ onTranscript, onLanguageDetected }) => {
         {isListening ? (
           <>
             <Pulse />
-            <span
+            <Mic
+              size={20}
               style={{ display: 'flex', alignItems: 'center' }}
-              className='material-symbols-outlined'
               onClick={stopListening}
-            >
-              mic
-            </span>
+            />
           </>
         ) : (
-          <span
-            className='material-symbols-outlined'
+          <MicOff
+            size={20}
             onClick={() => {
               startListening()
             }}
-          >
-            mic_off
-          </span>
+          />
         )}
       </MicBtn>
     </>

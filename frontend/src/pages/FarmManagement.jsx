@@ -14,10 +14,11 @@ import TopBar from '../components/TopBar'
 import FarmCard from '../components/FarmCard'
 import QuickActions from './QuickActions'
 import Chatbot from '../components/chatbot/Chatbot'
+import { Outlet, useLocation } from 'react-router-dom'
 
-const OrchardManagement = () => {
+const OrchardManagement = ({ activeTab, setActiveTab }) => {
   const [farmMetrics, setFarmMetrics] = useState(null)
-  const [activeTab, setActiveTab] = useState('Dashboard')
+  const location = useLocation()
   // Dummy data for development
   const data = {
     health: {
@@ -84,11 +85,33 @@ const OrchardManagement = () => {
       ]
     }
   }
-
+  const routeName = location.pathname.slice(16)
   useEffect(() => {
     setFarmMetrics(data)
   }, [])
-
+  useEffect(() => {
+    console.log(routeName)
+    switch (routeName) {
+      case '/analysis':
+        setActiveTab('Analysis')
+        break
+      case '/dashboard':
+        setActiveTab('Dashboard')
+        break
+      case '/quick-actions':
+        setActiveTab('Quick Actions')
+        break
+      case '/learn':
+        setActiveTab('Learn')
+        break
+      case '/drone':
+        setActiveTab('My Drone')
+        break
+      default:
+        setActiveTab('Dashboard')
+        break
+    }
+  }, [location.pathname])
   // Destructure farmMetrics
   const {
     health: {
@@ -106,155 +129,7 @@ const OrchardManagement = () => {
     <>
       <TopBar classname='sm:hidden' activeTab={activeTab} />
       <SidebarLeft activeTab={activeTab} setActiveTab={setActiveTab} />
-      {activeTab === 'Dashboard' && <FarmCard />}
-      {activeTab === 'Profile' && <h1>Profile</h1>}
-      {activeTab === 'Quick Actions' && <QuickActions />}
-      {activeTab === 'Orchard Ai' && <Chatbot />}
-      {activeTab === 'Home' && <h1>Home</h1>}
-      <div className='hidden sm:flex  bg-white p-4 sm:pl-48 flex flex-col gap-6 bg-[#dedede]'>
-        <header className='flex justify-between items-start mb-4'>
-          <div className='flex items-center'>
-            <h1 className='text-lg font-semibold text-gray-800'>
-              Orchard Management
-            </h1>
-          </div>
-        </header>
-
-        {farmMetrics ? (
-          <>
-            <div className='flex gap-4 items-start'>
-              <Card
-                className='p-4'
-                bgColor={'bg-[#EBFAEB]'}
-                otherStyles={'border border-[#81ec81]'}
-              >
-                <h2 className='font-semibold mb-2 text-lg'>
-                  Leaves and Fruits
-                </h2>
-                <div className='flex flex-col gap-4'>
-                  <div className='flex space-x-4'>
-                    <DoughnutChartWithImage
-                      img={leafForChart}
-                      label1='Healthy leaves'
-                      label2='Diseased Leaves'
-                      data1={healthyLeaves}
-                      data2={unhealthyLeaves}
-                    />
-                    <div className='mt-2 flex flex-col'>
-                      <div className='flex items-center'>
-                        <span className='w-3 h-3 bg-teal-500 rounded-full mr-2'></span>
-                        <span className='text-sm'>Healthy Leaves</span>
-                      </div>
-                      <div className='flex items-center'>
-                        <span className='w-3 h-3 bg-red-500 rounded-full mr-2'></span>
-                        <span className='text-sm'>Leaves with disease</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className='flex space-x-4'>
-                    <DoughnutChartWithImage
-                      img={appleForChart}
-                      label1='Healthy Apples'
-                      label2='Diseased Apples'
-                      data1={healthyFruits}
-                      data2={unhealthyFruits}
-                    />
-                    <div className='mt-2 flex flex-col'>
-                      <div className='flex items-center'>
-                        <span className='w-3 h-3 bg-teal-500 rounded-full mr-2'></span>
-                        <span className='text-sm'>Healthy Apples</span>
-                      </div>
-                      <div className='flex items-center'>
-                        <span className='w-3 h-3 bg-red-500 rounded-full mr-2'></span>
-                        <span className='text-sm'>Apples with disease</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-
-              <Card
-                className='p-4 col-span-2 '
-                bgColor={'bg-[#B7F1B7]'}
-                otherStyles={'border border-[#48bc48]'}
-              >
-                <h2 className='font-semibold mb-2 w-[25vw]'>Overall</h2>
-                <div className='text-lg'>
-                  <span>Esitimated Yield :</span>
-                  <span> 87 Tonnes</span>
-                </div>
-                <div className='text-lg'>
-                  <span>Pest Outbreak : </span>
-                  <span> Codling Moth</span>
-                </div>
-                {/* Content for Overall card */}
-              </Card>
-
-              <Card
-                bgColor={'bg-[#D6F2EE]'}
-                otherStyles={'border border-[#71c9bd]'}
-              >
-                <div className='flex items-center justify-between gap-4'>
-                  <div className='flex items-center'>
-                    <img src={sunCloud} alt='sun behing clouds' />
-                  </div>
-                  <div className='flex flex-col'>
-                    <div className='text-right flex gap-2  items-center'>
-                      <span className='text-2xl font-light'>
-                        {temperature}&#176;
-                      </span>
-                      <span className='block text-l font-light'>
-                        {prediction}
-                      </span>
-                    </div>
-                    <div className='border-t border-black my-2'></div>
-                    <div className='flex flex-col'>
-                      <div className='text-right flex gap-2  items-center'>
-                        <span className='text-md font-light'>{humidity}%</span>
-                        <span className='block text-sm font-light'>
-                          humidity
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            </div>
-            <div className='flex gap-4 items-start'>
-              <Card className='p-4 bg-yellow-50' bgColor={'bg-[#EDF9DA]'}>
-                <div className='flex justify-between items-center'>
-                  <h2 className='font-semibold'>Pests and Diseases</h2>
-                  <ChevronDown />
-                </div>
-                <div className='mt-2 bg-yellow-200 rounded-full h-2'></div>
-              </Card>
-
-              <Card className='p-4' bgColor={'bg-white'}>
-                <div className='flex justify-between items-center mb-2'>
-                  <h2 className='font-semibold'>Production</h2>
-                </div>
-
-                <LineChart
-                  labels={[0, 15, 30, 45, 60, 75]}
-                  data={farmMetrics.estimatedAppleYield}
-                  title='Estimated Apple Count (tonnes)'
-                />
-              </Card>
-              <Card bgColor={'bg-[#FAEBEB]'}>
-                <PieChart dataSet={chance} labels={disease} />
-              </Card>
-              {/* <Card bgColor={'bg-[#FAEBEB]'}>
-                <PrecisionMap
-                  data={farmMetrics.precisionMapData}
-                  title='2D Precision Map'
-                />
-              </Card> */}
-            </div>
-          </>
-        ) : (
-          <div>Loading...</div>
-        )}
-      </div>
+      <Outlet />
     </>
   )
 }
